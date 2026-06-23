@@ -1,0 +1,58 @@
+{
+    "app": {
+        "title": "Wichtelomat",
+        "loading": "Loading..."
+    },
+    "auth": {
+        "login": "Sign in",
+        "logout": "Sign out",
+        "register": "Register",
+        "email": "Email address",
+        "password": "Password",
+        "name": "Name",
+        "forgotPassword": "Forgot password?",
+        "noAccount": "No account yet? Register",
+        "resetPassword": "Reset password"
+    },
+    "actions": {
+        "create": "Create gift exchange",
+        "myActions": "My exchanges",
+        "name": "Exchange name",
+        "handoverDate": "Handover date",
+        "maxCost": "Max. cost (optional)",
+        "start": "Start exchange",
+        "confirmStart": "Really start the exchange? This cannot be undone.",
+        "cancel": "Cancel exchange",
+        "confirmCancel": "Really cancel? All exchange data will be deleted.",
+        "status": {
+            "SETUP": "Setup",
+            "ACTIVE": "Active",
+            "COMPLETED": "Completed",
+            "CANCELLED": "Cancelled"
+        }
+    },
+    "members": {
+        "title": "Members",
+        "invite": "Invite",
+        "remove": "Remove",
+        "confirmRemove": "Really remove this member?"
+    },
+    "exclusions": {
+        "title": "Exclusions",
+        "add": "Add exclusion"
+    },
+    "wishlist": {
+        "title": "My wishlist",
+        "hint": "Editable only until the exchange starts.",
+        "save": "Save"
+    },
+    "assignment": {
+        "title": "My assignment",
+        "youGiftTo": "You're gifting to:"
+    },
+    "errors": {
+        "generic": "An error occurred.",
+        "tooManyExclusions": "Too many exclusions – please revise.",
+        "invitationExpired": "This invitation link has expired."
+    }
+}

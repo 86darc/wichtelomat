@@ -1,0 +1,58 @@
+{
+    "app": {
+        "title": "Wichtelomat",
+        "loading": "Laden..."
+    },
+    "auth": {
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "register": "Registrieren",
+        "email": "E-Mail-Adresse",
+        "password": "Passwort",
+        "name": "Name",
+        "forgotPassword": "Passwort vergessen?",
+        "noAccount": "Noch kein Konto? Registrieren",
+        "resetPassword": "Passwort zurücksetzen"
+    },
+    "actions": {
+        "create": "Wichtelaktion erstellen",
+        "myActions": "Meine Aktionen",
+        "name": "Name der Aktion",
+        "handoverDate": "Übergabedatum",
+        "maxCost": "Max. Kosten (optional)",
+        "start": "Aktion starten",
+        "confirmStart": "Aktion wirklich starten? Das kann nicht rückgängig gemacht werden.",
+        "cancel": "Aktion abbrechen",
+        "confirmCancel": "Aktion wirklich abbrechen? Alle Aktionsdaten werden gelöscht.",
+        "status": {
+            "SETUP": "Einrichtung",
+            "ACTIVE": "Aktiv",
+            "COMPLETED": "Abgeschlossen",
+            "CANCELLED": "Abgebrochen"
+        }
+    },
+    "members": {
+        "title": "Mitglieder",
+        "invite": "Einladen",
+        "remove": "Entfernen",
+        "confirmRemove": "Dieses Mitglied wirklich entfernen?"
+    },
+    "exclusions": {
+        "title": "Ausschlüsse",
+        "add": "Ausschluss hinzufügen"
+    },
+    "wishlist": {
+        "title": "Mein Wunschzettel",
+        "hint": "Nur bis zum Aktionsstart bearbeitbar.",
+        "save": "Speichern"
+    },
+    "assignment": {
+        "title": "Meine Zuweisung",
+        "youGiftTo": "Du wichtelst für:"
+    },
+    "errors": {
+        "generic": "Ein Fehler ist aufgetreten.",
+        "tooManyExclusions": "Zu viele Ausschlüsse – bitte überarbeiten.",
+        "invitationExpired": "Dieser Einladungslink ist abgelaufen."
+    }
+}
