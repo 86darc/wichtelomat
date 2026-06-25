@@ -5,6 +5,7 @@ import ActionsListPage from './pages/actions/ActionsListPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import ResetPasswordPage from './pages/auth/ResetPasswordPage'
+import CreateActionPage from './pages/actions/CreateActionPage'
 
 function ProtectedRoute({ children }) {
   const { session, loading } = useAuth()
@@ -24,6 +25,9 @@ function AppRoutes() {
       {/* Geschützt */}
       <Route path="/" element={
         <ProtectedRoute><ActionsListPage /></ProtectedRoute>
+      } />
+      <Route path="/actions/new" element={
+        <ProtectedRoute><CreateActionPage /></ProtectedRoute>
       } />
     </Routes>
   )
