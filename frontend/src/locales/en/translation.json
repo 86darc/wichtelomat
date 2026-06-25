@@ -1,7 +1,8 @@
 {
     "app": {
         "title": "Wichtelomat",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "comingSoon": "Coming soon."
     },
     "auth": {
         "login": "Sign in",
@@ -24,6 +25,7 @@
         "confirmStart": "Really start the exchange? This cannot be undone.",
         "cancel": "Cancel exchange",
         "confirmCancel": "Really cancel? All exchange data will be deleted.",
+        "backToList": "Back to list",
         "status": {
             "SETUP": "Setup",
             "ACTIVE": "Active",
@@ -35,7 +37,12 @@
         "title": "Members",
         "invite": "Invite",
         "remove": "Remove",
-        "confirmRemove": "Really remove this member?"
+        "confirmRemove": "Really remove this member?",
+        "you": "You",
+        "role": {
+            "ADMIN": "Admin",
+            "MEMBER": "Member"
+        }
     },
     "exclusions": {
         "title": "Exclusions",

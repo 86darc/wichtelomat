@@ -70,3 +70,27 @@ export async function cancelAction(actionId) {
         .eq('id', actionId)
     if (error) throw error
 }
+
+// READ: Mitglieder einer Aktion inkl. Display-Name aus profiles
+export async function getMemberships(actionId) {
+    const { data: members, error } = await supabase
+        .from('memberships')
+        .select('id, user_id, role_in_action, is_guest, guest_email, joined_at')
+        .eq('action_id', actionId)
+        .order('joined_at', { ascending: true })
+    if (error) throw error
+
+    const userIds = members.filter(m => m.user_id).map(m => m.user_id)
+    if (userIds.length === 0) return members
+
+    const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, display_name')
+        .in('id', userIds)
+
+    const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p]))
+    return members.map(m => ({
+        ...m,
+        display_name: profileMap[m.user_id]?.display_name || null
+    }))
+}

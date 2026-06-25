@@ -1,7 +1,8 @@
 {
     "app": {
         "title": "Wichtelomat",
-        "loading": "Laden..."
+        "loading": "Laden...",
+        "comingSoon": "Demnächst verfügbar."
     },
     "auth": {
         "login": "Anmelden",
@@ -24,6 +25,7 @@
         "confirmStart": "Aktion wirklich starten? Das kann nicht rückgängig gemacht werden.",
         "cancel": "Aktion abbrechen",
         "confirmCancel": "Aktion wirklich abbrechen? Alle Aktionsdaten werden gelöscht.",
+        "backToList": "Zurück zur Übersicht",
         "status": {
             "SETUP": "Einrichtung",
             "ACTIVE": "Aktiv",
@@ -35,7 +37,12 @@
         "title": "Mitglieder",
         "invite": "Einladen",
         "remove": "Entfernen",
-        "confirmRemove": "Dieses Mitglied wirklich entfernen?"
+        "confirmRemove": "Dieses Mitglied wirklich entfernen?",
+        "you": "Du",
+        "role": {
+            "ADMIN": "Admin",
+            "MEMBER": "Mitglied"
+        }
     },
     "exclusions": {
         "title": "Ausschlüsse",
