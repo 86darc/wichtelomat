@@ -1,10 +1,10 @@
 import { supabase } from '../utils/supabaseClient'
 
-export async function createInvitation(actionId, email) {
+export async function createInvitation(actionId, email, name) {
     const { data, error } = await supabase
         .from('invitations')
-        .insert({ action_id: actionId, guest_email: email })
-        .select('id, token, guest_email, expires_at')
+        .insert({ action_id: actionId, guest_email: email, invited_name: name || null })
+        .select('id, token, guest_email, invited_name, expires_at')
         .single()
     if (error) throw error
     return data
@@ -28,9 +28,9 @@ export async function acceptInvitation(token) {
     return data
 }
 
-export async function sendInvitationEmail(token, guestEmail, actionName) {
+export async function sendInvitationEmail(token, guestEmail, actionName, invitedName) {
     const { error } = await supabase.functions.invoke('send-invitation-email', {
-        body: { token, guestEmail, actionName }
+        body: { token, guestEmail, actionName, invitedName }
     })
     if (error) throw error
 }

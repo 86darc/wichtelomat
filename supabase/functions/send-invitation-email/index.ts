@@ -6,13 +6,14 @@ const FROM = 'Wichtelomat <noreply@wichtelomat.ch>'
 
 serve(async (req) => {
     try {
-        const { token, guestEmail, actionName } = await req.json()
+        const { token, guestEmail, actionName, invitedName } = await req.json()
 
         if (!token || !guestEmail || !actionName) {
             return new Response(JSON.stringify({ error: 'missing_params' }), { status: 400 })
         }
 
         const inviteUrl = `${SITE_URL}/invitation/${token}`
+        const greeting = invitedName ? `Hallo ${invitedName}!` : 'Hallo!'
 
         const res = await fetch('https://api.resend.com/emails', {
             method: 'POST',
@@ -25,7 +26,7 @@ serve(async (req) => {
                 to: [guestEmail],
                 subject: `Du wurdest zu "${actionName}" eingeladen`,
                 html: `
-                    <p>Hallo!</p>
+                    <p>${greeting}</p>
                     <p>Du wurdest eingeladen, an der Wichtelaktion <strong>${actionName}</strong> teilzunehmen.</p>
                     <p>
                         <a href="${inviteUrl}" style="display:inline-block;padding:10px 20px;background:#1E3A5F;color:#fff;border-radius:4px;text-decoration:none;">

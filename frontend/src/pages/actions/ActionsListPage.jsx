@@ -31,11 +31,17 @@ function ActionsListPage() {
         navigate('/login')
     }
 
+    function formatDate(dateStr) {
+        if (!dateStr) return ''
+        const [y, m, d] = dateStr.split('-')
+        return `${d}.${m}.${y}`
+    }
+
     return (
         <div className="page-container">
             <header className="page-header">
                 <h1>{t('actions.myActions')}</h1>
-                <button onClick={handleLogout}>{t('auth.logout')}</button>
+                <button className="btn-logout" onClick={handleLogout}>{t('auth.logout')}</button>
             </header>
 
             <Link to="/actions/new" className="btn-primary">
@@ -48,9 +54,13 @@ function ActionsListPage() {
             <div className="actions-grid">
                 {actions.map(action => (
                     <Link key={action.id} to={`/actions/${action.id}`} className="action-card">
-                        <h3>{action.name}</h3>
-                        <p>{t(`actions.status.${action.status}`)}</p>
-                        <p>{t('actions.handoverDate')}: {action.handover_date}</p>
+                        <div className="action-card-top">
+                            <h3>{action.name}</h3>
+                            <span className={`status-badge status-${action.status.toLowerCase()}`}>
+                                {t(`actions.status.${action.status}`)}
+                            </span>
+                        </div>
+                        <p className="action-card-date">{formatDate(action.handover_date)}</p>
                     </Link>
                 ))}
             </div>

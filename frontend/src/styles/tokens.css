@@ -1,15 +1,25 @@
 :root {
-    /* Farben */
-    --color-primary: #1E3A5F;
-    --color-primary-light: #2E5D8F;
-    --color-accent: #C0392B;
-    --color-bg: #F5F7FA;
-    --color-surface: #FFFFFF;
-    --color-border: #DEE2E6;
-    --color-text: #212529;
-    --color-text-muted: #6C757D;
-    --color-success: #27AE60;
-    --color-error: #C0392B;
+    /* Weihnachts-Farbpalette */
+    --color-primary:        #1A4731;
+    --color-primary-light:  #2D6A4F;
+    --color-accent:         #B91C1C;
+    --color-gold:           #C9A84C;
+    --color-bg:             #FDF8F0;
+    --color-surface:        #FFFFFF;
+    --color-border:         #D4C5B0;
+    --color-text:           #1A1A1A;
+    --color-text-muted:     #6B7280;
+    --color-success:        #2D6A4F;
+    --color-error:          #B91C1C;
+
+    /* Button-Tokens */
+    --btn-primary-bg:       #2D6A4F;
+    --btn-primary-text:     #FFFFFF;
+    --btn-cancel-bg:        #B91C1C;
+    --btn-cancel-text:      #FFFFFF;
+    --btn-secondary-bg:     #FFFFFF;
+    --btn-secondary-text:   #1A1A1A;
+    --btn-secondary-border: #D4C5B0;
 
     /* Abstände */
     --space-xs: 0.25rem;

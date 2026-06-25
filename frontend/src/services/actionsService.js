@@ -138,6 +138,17 @@ export async function saveWishlist(membershipId, content) {
     if (error) throw error
 }
 
+// READ: Offene/abgelehnte Einladungen einer Aktion (für Admin-View)
+export async function getPendingInvitations(actionId) {
+    const { data, error } = await supabase
+        .from('invitations')
+        .select('id, guest_email, invited_name, status, created_at')
+        .eq('action_id', actionId)
+        .in('status', ['PENDING', 'REJECTED'])
+    if (error) throw error
+    return data || []
+}
+
 // READ: Meine Zuweisung (nur wenn ACTIVE/COMPLETED)
 export async function getMyAssignment(myMembershipId) {
     const { data: assignment, error } = await supabase

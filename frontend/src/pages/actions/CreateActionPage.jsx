@@ -32,7 +32,6 @@ function CreateActionPage() {
 
     return (
         <div className="page-container">
-            <Link to="/">← {t('actions.myActions')}</Link>
             <h1>{t('actions.create')}</h1>
             {error && <p className="error-msg">{error}</p>}
             <form onSubmit={handleSubmit} className="form-vertical">
@@ -64,9 +63,17 @@ function CreateActionPage() {
                         onChange={e => setMaxCost(e.target.value)}
                     />
                 </label>
-                <button type="submit" disabled={loading}>
-                    {loading ? t('app.loading') : t('actions.create')}
-                </button>
+
+                <div className="page-footer">
+                    <div className="page-footer-left">
+                        <Link to="/" className="btn-secondary">← {t('actions.backToList')}</Link>
+                    </div>
+                    <div className="page-footer-right">
+                        <button type="submit" className="btn-primary" disabled={loading}>
+                            {loading ? t('app.loading') : t('actions.create')}
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     )

@@ -51,6 +51,7 @@
     },
     "invite": {
         "title": "Invite",
+        "name": "Name",
         "email": "Email address",
         "submit": "Invite",
         "success": "Invitation sent.",
@@ -58,7 +59,9 @@
         "linkCopied": "Copied!",
         "joinAction": "Join exchange",
         "loginToJoin": "Sign in or register to join.",
-        "alreadyMember": "You are already a member of this exchange."
+        "alreadyMember": "You are already a member of this exchange.",
+        "invited": "Invited",
+        "rejected": "Declined"
     },
     "exclusions": {
         "title": "Exclusions",

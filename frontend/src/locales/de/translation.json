@@ -51,6 +51,7 @@
     },
     "invite": {
         "title": "Einladen",
+        "name": "Name",
         "email": "E-Mail-Adresse",
         "submit": "Einladen",
         "success": "Einladung gesendet.",
@@ -58,7 +59,9 @@
         "linkCopied": "Kopiert!",
         "joinAction": "Aktion beitreten",
         "loginToJoin": "Melde dich an oder registriere dich, um beizutreten.",
-        "alreadyMember": "Du bist bereits Mitglied dieser Aktion."
+        "alreadyMember": "Du bist bereits Mitglied dieser Aktion.",
+        "invited": "Eingeladen",
+        "rejected": "Abgelehnt"
     },
     "exclusions": {
         "title": "Ausschlüsse",

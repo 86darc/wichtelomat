@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
-import { getAction, getMemberships, updateAction, getMyAssignment, getMyWishlist, saveWishlist, getExclusions, addExclusion, removeExclusion } from '../../services/actionsService'
+import {
+    getAction, getMemberships, updateAction,
+    getMyAssignment, getMyWishlist, saveWishlist,
+    getExclusions, addExclusion, removeExclusion,
+    getPendingInvitations
+} from '../../services/actionsService'
 import { startDraw } from '../../services/drawService'
 import { createInvitation, sendInvitationEmail } from '../../services/invitationService'
 
@@ -13,6 +18,12 @@ const TABS = [
     { key: 'wishlist',   labelKey: 'wishlist.title' },
     { key: 'assignment', labelKey: 'assignment.title' },
 ]
+
+function formatDate(dateStr) {
+    if (!dateStr) return ''
+    const [y, m, d] = dateStr.split('-')
+    return `${d}.${m}.${y}`
+}
 
 function ActionDetailPage() {
     const { id } = useParams()
@@ -70,15 +81,16 @@ function ActionDetailPage() {
 
     return (
         <div className="page-container">
-            <Link to="/" className="back-link">← {t('actions.backToList')}</Link>
-
             <div className="action-detail-header">
                 <div>
                     <h1>{action.name}</h1>
                     <div className="action-meta">
-                        <span>{t('actions.handoverDate')}: {action.handover_date}</span>
+                        <span>{formatDate(action.handover_date)}</span>
                         {action.max_cost && (
-                            <span>{t('actions.maxCost')}: CHF {Number(action.max_cost).toFixed(2)}</span>
+                            <>
+                                <span className="action-meta-sep">·</span>
+                                <span>CHF {Number(action.max_cost).toFixed(2)}</span>
+                            </>
                         )}
                     </div>
                 </div>
@@ -147,13 +159,13 @@ function ActionDetailPage() {
             </div>
 
             {isAdmin && action.status === 'SETUP' && (
-                <div className="action-footer">
+                <div>
                     {memberships.length < 2 && (
                         <p className="text-muted">{t('actions.minMembers')}</p>
                     )}
                     {drawError && <p className="error-msg">{drawError}</p>}
                     <button
-                        className="btn-danger"
+                        className="btn-start-action"
                         onClick={handleStart}
                         disabled={!canStart || starting}
                     >
@@ -161,6 +173,13 @@ function ActionDetailPage() {
                     </button>
                 </div>
             )}
+
+            <div className="page-footer">
+                <div className="page-footer-left">
+                    <Link to="/" className="btn-secondary">← {t('actions.backToList')}</Link>
+                </div>
+                <div className="page-footer-right"></div>
+            </div>
         </div>
     )
 }
@@ -189,10 +208,22 @@ function VorgabenTab({ action, isAdmin, onUpdate, t }) {
         }
     }
 
+    if (!(isAdmin && action.status === 'SETUP')) {
+        return (
+            <div className="vorgaben-tab">
+                <div className="vorgaben-readonly">
+                    <p><strong>{formatDate(action.handover_date)}</strong></p>
+                    {action.max_cost && <p>CHF <strong>{Number(action.max_cost).toFixed(2)}</strong></p>}
+                    <p className="text-muted">{t('actions.settingsLocked')}</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div className="vorgaben-tab">
-            {isAdmin && action.status === 'SETUP' ? (
-                <form className="form-vertical" onSubmit={handleSave}>
+        <form className="vorgaben-tab" onSubmit={handleSave}>
+            <div className="vorgaben-grid">
+                <div className="vorgaben-field">
                     <label>
                         {t('actions.handoverDate')}
                         <input
@@ -202,6 +233,8 @@ function VorgabenTab({ action, isAdmin, onUpdate, t }) {
                             required
                         />
                     </label>
+                </div>
+                <div className="vorgaben-field">
                     <label>
                         {t('actions.maxCost')}
                         <input
@@ -213,20 +246,16 @@ function VorgabenTab({ action, isAdmin, onUpdate, t }) {
                             placeholder="—"
                         />
                     </label>
-                    <button type="submit" disabled={saving}>
-                        {saving ? t('app.loading') : t('actions.saveSettings')}
-                    </button>
-                    {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
-                    {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
-                </form>
-            ) : (
-                <div className="vorgaben-readonly">
-                    <p>{t('actions.handoverDate')}: <strong>{action.handover_date}</strong></p>
-                    {action.max_cost && <p>{t('actions.maxCost')}: <strong>CHF {Number(action.max_cost).toFixed(2)}</strong></p>}
-                    <p className="text-muted">{t('actions.settingsLocked')}</p>
                 </div>
-            )}
-        </div>
+            </div>
+            {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
+            {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
+            <div className="form-footer">
+                <button type="submit" className="btn-primary" disabled={saving}>
+                    {saving ? t('app.loading') : t('actions.saveSettings')}
+                </button>
+            </div>
+        </form>
     )
 }
 
@@ -258,9 +287,11 @@ function AssignmentTab({ action, myMembership, t }) {
             <p className="assignment-label">{t('assignment.youGiftTo')}</p>
             <p className="assignment-receiver">{assignment.receiver_name}</p>
             {assignment.wishlist_content ? (
-                <div className="wishlist-readonly">
-                    <p className="wishlist-label">{t('wishlist.title')}</p>
-                    <p className="wishlist-content">{assignment.wishlist_content}</p>
+                <div className="assignment-wishlist">
+                    <div className="wishlist-readonly">
+                        <p className="wishlist-label">{t('wishlist.title')}</p>
+                        <p className="wishlist-content">{assignment.wishlist_content}</p>
+                    </div>
                 </div>
             ) : (
                 <p className="text-muted">{t('wishlist.empty')}</p>
@@ -274,7 +305,6 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
     const [loading, setLoading] = useState(true)
     const [giverId, setGiverId] = useState('')
     const [excludedId, setExcludedId] = useState('')
-    const [bidirectional, setBidirectional] = useState(true)
     const [adding, setAdding] = useState(false)
     const [error, setError] = useState(null)
 
@@ -296,7 +326,6 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
         setError(null)
         try {
             await addExclusion(action.id, giverId, excludedId)
-            if (bidirectional) await addExclusion(action.id, excludedId, giverId)
             const updated = await getExclusions(action.id)
             setExclusions(updated)
             setGiverId('')
@@ -360,15 +389,7 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
                             <option key={m.id} value={m.id}>{memberMap[m.id]}</option>
                         ))}
                     </select>
-                    <label className="exclusion-bidi">
-                        <input
-                            type="checkbox"
-                            checked={bidirectional}
-                            onChange={e => setBidirectional(e.target.checked)}
-                        />
-                        {t('exclusions.bidirectional')}
-                    </label>
-                    <button type="submit" disabled={adding}>
+                    <button type="submit" className="btn-primary" disabled={adding}>
                         {adding ? t('app.loading') : t('exclusions.add')}
                     </button>
                     {error && <p className="error-msg">{error}</p>}
@@ -414,42 +435,56 @@ function WishlistTab({ action, myMembership, t }) {
 
     const editable = action.status === 'SETUP'
 
-    return (
-        <div className="wishlist-tab">
-            {editable && <p className="text-muted">{t('wishlist.hint')}</p>}
-            {editable ? (
-                <form className="form-vertical" onSubmit={handleSave}>
-                    <textarea
-                        className="wishlist-textarea"
-                        value={content}
-                        onChange={e => setContent(e.target.value)}
-                        rows={6}
-                        placeholder="…"
-                    />
-                    <button type="submit" disabled={saving}>
-                        {saving ? t('app.loading') : t('wishlist.save')}
-                    </button>
-                    {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
-                    {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
-                </form>
-            ) : (
+    if (!editable) {
+        return (
+            <div className="wishlist-tab">
                 <div className="wishlist-readonly">
                     {content
                         ? <p className="wishlist-content">{content}</p>
                         : <p className="text-muted">{t('wishlist.empty')}</p>
                     }
                 </div>
-            )}
-        </div>
+            </div>
+        )
+    }
+
+    return (
+        <form className="wishlist-tab" onSubmit={handleSave}>
+            <p className="text-muted">{t('wishlist.hint')}</p>
+            <textarea
+                className="wishlist-textarea"
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                rows={8}
+                placeholder="…"
+            />
+            {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
+            {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
+            <div className="form-footer">
+                <button type="submit" className="btn-primary" disabled={saving}>
+                    {saving ? t('app.loading') : t('wishlist.save')}
+                </button>
+            </div>
+        </form>
     )
 }
 
 function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }) {
     const [inviteEmail, setInviteEmail] = useState('')
+    const [inviteName, setInviteName] = useState('')
     const [inviting, setInviting] = useState(false)
     const [inviteLink, setInviteLink] = useState(null)
     const [inviteError, setInviteError] = useState(null)
     const [copied, setCopied] = useState(false)
+    const [pendingInvitations, setPendingInvitations] = useState([])
+
+    useEffect(() => {
+        if (isAdmin) {
+            getPendingInvitations(action.id)
+                .then(setPendingInvitations)
+                .catch(() => {})
+        }
+    }, [action.id, isAdmin])
 
     async function handleInvite(e) {
         e.preventDefault()
@@ -457,12 +492,14 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
         setInviteError(null)
         setInviteLink(null)
         try {
-            const inv = await createInvitation(action.id, inviteEmail)
+            const inv = await createInvitation(action.id, inviteEmail, inviteName)
             const link = `${window.location.origin}/invitation/${inv.token}`
             setInviteLink(link)
             setInviteEmail('')
-            try { await sendInvitationEmail(inv.token, inv.guest_email, action.name) } catch {}
+            setInviteName('')
+            try { await sendInvitationEmail(inv.token, inv.guest_email, action.name, inviteName) } catch {}
             onUpdate()
+            getPendingInvitations(action.id).then(setPendingInvitations).catch(() => {})
         } catch (err) {
             setInviteError(err.message)
         } finally {
@@ -478,25 +515,15 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
 
     return (
         <div className="members-tab">
-            <ul className="member-list">
-                {memberships.map(m => (
-                    <li key={m.id} className="member-item">
-                        <span className="member-name">
-                            {m.is_guest ? m.guest_email : (m.display_name || '—')}
-                            {m.user_id === currentUserId && (
-                                <span className="member-you"> ({t('members.you')})</span>
-                            )}
-                        </span>
-                        <span className={`role-badge role-${m.role_in_action.toLowerCase()}`}>
-                            {t(`members.role.${m.role_in_action}`)}
-                        </span>
-                    </li>
-                ))}
-            </ul>
-
             {isAdmin && action.status === 'SETUP' && (
                 <div className="invite-section">
                     <form className="invite-form" onSubmit={handleInvite}>
+                        <input
+                            type="text"
+                            value={inviteName}
+                            onChange={e => setInviteName(e.target.value)}
+                            placeholder={t('invite.name')}
+                        />
                         <input
                             type="email"
                             value={inviteEmail}
@@ -504,7 +531,7 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
                             placeholder={t('invite.email')}
                             required
                         />
-                        <button type="submit" disabled={inviting}>
+                        <button type="submit" className="btn-primary" disabled={inviting}>
                             {inviting ? t('app.loading') : t('invite.submit')}
                         </button>
                     </form>
@@ -522,6 +549,37 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
                     {inviteError && <p className="error-msg">{inviteError}</p>}
                 </div>
             )}
+
+            <ul className="member-list">
+                {memberships.map(m => (
+                    <li key={m.id} className="member-item">
+                        <div className="member-info">
+                            <span className="member-name">
+                                {m.is_guest ? m.guest_email : (m.display_name || '—')}
+                            </span>
+                            {m.user_id === currentUserId && (
+                                <span className="member-you">({t('members.you')})</span>
+                            )}
+                        </div>
+                        <span className={`role-badge role-${m.role_in_action.toLowerCase()}`}>
+                            {t(`members.role.${m.role_in_action}`)}
+                        </span>
+                    </li>
+                ))}
+                {pendingInvitations.map(inv => (
+                    <li key={inv.id} className="member-item">
+                        <div className="member-info">
+                            {inv.invited_name && (
+                                <span className="member-name">{inv.invited_name}</span>
+                            )}
+                            <span className="member-email-muted">{inv.guest_email}</span>
+                        </div>
+                        <span className={`invite-tag ${inv.status === 'PENDING' ? 'tag-invited' : 'tag-rejected'}`}>
+                            {inv.status === 'PENDING' ? t('invite.invited') : t('invite.rejected')}
+                        </span>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
