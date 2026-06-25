@@ -62,7 +62,12 @@
     },
     "exclusions": {
         "title": "Exclusions",
-        "add": "Add exclusion"
+        "add": "Add",
+        "none": "No exclusions defined.",
+        "selectGiver": "Who should not gift to...",
+        "selectExcluded": "...this member",
+        "bidirectional": "Bidirectional",
+        "locked": "Exclusions cannot be changed after the exchange has started."
     },
     "wishlist": {
         "title": "Wishlist",

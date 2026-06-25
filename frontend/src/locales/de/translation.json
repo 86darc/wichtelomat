@@ -62,7 +62,12 @@
     },
     "exclusions": {
         "title": "Ausschlüsse",
-        "add": "Ausschluss hinzufügen"
+        "add": "Hinzufügen",
+        "none": "Keine Ausschlüsse definiert.",
+        "selectGiver": "Wer nicht wichteln soll für...",
+        "selectExcluded": "...dieses Mitglied",
+        "bidirectional": "Beidseitig",
+        "locked": "Ausschlüsse können nach dem Start nicht mehr geändert werden."
     },
     "wishlist": {
         "title": "Wunschzettel",

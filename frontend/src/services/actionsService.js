@@ -95,6 +95,31 @@ export async function getMemberships(actionId) {
     }))
 }
 
+// READ/WRITE: Ausschlüsse
+export async function getExclusions(actionId) {
+    const { data, error } = await supabase
+        .from('exclusions')
+        .select('id, giver_membership_id, excluded_membership_id')
+        .eq('action_id', actionId)
+    if (error) throw error
+    return data
+}
+
+export async function addExclusion(actionId, giverMembershipId, excludedMembershipId) {
+    const { error } = await supabase
+        .from('exclusions')
+        .insert({ action_id: actionId, giver_membership_id: giverMembershipId, excluded_membership_id: excludedMembershipId })
+    if (error && !error.message.includes('duplicate')) throw error
+}
+
+export async function removeExclusion(exclusionId) {
+    const { error } = await supabase
+        .from('exclusions')
+        .delete()
+        .eq('id', exclusionId)
+    if (error) throw error
+}
+
 // READ/WRITE: Wunschzettel
 export async function getMyWishlist(membershipId) {
     const { data, error } = await supabase

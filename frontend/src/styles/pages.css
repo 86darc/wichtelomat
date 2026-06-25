@@ -243,6 +243,89 @@
     font-size: var(--font-size-sm);
 }
 
+/* Ausschlüsse-Tab */
+
+.exclusions-tab {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.exclusion-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.exclusion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.exclusion-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.exclusion-form select {
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    flex: 1;
+    min-width: 160px;
+}
+
+.exclusion-arrow {
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.exclusion-bidi {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    width: 100%;
+}
+
+.exclusion-form button {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.btn-remove {
+    padding: 2px var(--space-sm);
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.btn-remove:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
 /* Wunschzettel-Tab */
 
 .wishlist-tab {
