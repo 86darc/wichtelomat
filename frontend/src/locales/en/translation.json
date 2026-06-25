@@ -26,6 +26,11 @@
         "cancel": "Cancel exchange",
         "confirmCancel": "Really cancel? All exchange data will be deleted.",
         "backToList": "Back to list",
+        "settingsTab": "Settings",
+        "saveSettings": "Save",
+        "settingsSaved": "Saved.",
+        "settingsLocked": "Settings cannot be changed after the exchange has started.",
+        "minMembers": "At least 2 members required.",
         "status": {
             "SETUP": "Setup",
             "ACTIVE": "Active",

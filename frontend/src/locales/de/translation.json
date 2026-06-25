@@ -26,6 +26,11 @@
         "cancel": "Aktion abbrechen",
         "confirmCancel": "Aktion wirklich abbrechen? Alle Aktionsdaten werden gelöscht.",
         "backToList": "Zurück zur Übersicht",
+        "settingsTab": "Vorgaben",
+        "saveSettings": "Speichern",
+        "settingsSaved": "Gespeichert.",
+        "settingsLocked": "Vorgaben können nach dem Start nicht mehr geändert werden.",
+        "minMembers": "Mindestens 2 Mitglieder nötig.",
         "status": {
             "SETUP": "Einrichtung",
             "ACTIVE": "Aktiv",
