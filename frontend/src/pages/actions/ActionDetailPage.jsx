@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
-import { getAction, getMemberships, updateAction, getMyAssignment, getMyWishlist, saveWishlist } from '../../services/actionsService'
+import { getAction, getMemberships, updateAction, getMyAssignment, getMyWishlist, saveWishlist, getExclusions, addExclusion, removeExclusion } from '../../services/actionsService'
 import { startDraw } from '../../services/drawService'
 import { createInvitation, sendInvitationEmail } from '../../services/invitationService'
 
@@ -137,7 +137,12 @@ function ActionDetailPage() {
                 )}
 
                 {activeTab === 'exclusions' && (
-                    <p className="text-muted">{t('app.comingSoon')}</p>
+                    <ExclusionsTab
+                        action={action}
+                        memberships={memberships}
+                        isAdmin={isAdmin}
+                        t={t}
+                    />
                 )}
             </div>
 
@@ -259,6 +264,119 @@ function AssignmentTab({ action, myMembership, t }) {
                 </div>
             ) : (
                 <p className="text-muted">{t('wishlist.empty')}</p>
+            )}
+        </div>
+    )
+}
+
+function ExclusionsTab({ action, memberships, isAdmin, t }) {
+    const [exclusions, setExclusions] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [giverId, setGiverId] = useState('')
+    const [excludedId, setExcludedId] = useState('')
+    const [bidirectional, setBidirectional] = useState(true)
+    const [adding, setAdding] = useState(false)
+    const [error, setError] = useState(null)
+
+    const memberMap = Object.fromEntries(
+        memberships.map(m => [m.id, m.is_guest ? m.guest_email : (m.display_name || m.guest_email || '—')])
+    )
+
+    useEffect(() => {
+        getExclusions(action.id)
+            .then(setExclusions)
+            .catch(err => setError(err.message))
+            .finally(() => setLoading(false))
+    }, [action.id])
+
+    async function handleAdd(e) {
+        e.preventDefault()
+        if (!giverId || !excludedId || giverId === excludedId) return
+        setAdding(true)
+        setError(null)
+        try {
+            await addExclusion(action.id, giverId, excludedId)
+            if (bidirectional) await addExclusion(action.id, excludedId, giverId)
+            const updated = await getExclusions(action.id)
+            setExclusions(updated)
+            setGiverId('')
+            setExcludedId('')
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setAdding(false)
+        }
+    }
+
+    async function handleRemove(id) {
+        try {
+            await removeExclusion(id)
+            setExclusions(prev => prev.filter(ex => ex.id !== id))
+        } catch (err) {
+            setError(err.message)
+        }
+    }
+
+    if (loading) return <p>{t('app.loading')}</p>
+
+    const canEdit = isAdmin && action.status === 'SETUP'
+
+    return (
+        <div className="exclusions-tab">
+            {exclusions.length === 0
+                ? <p className="text-muted">{t('exclusions.none')}</p>
+                : (
+                    <ul className="exclusion-list">
+                        {exclusions.map(ex => (
+                            <li key={ex.id} className="exclusion-item">
+                                <span>
+                                    <strong>{memberMap[ex.giver_membership_id] || '—'}</strong>
+                                    {' → '}
+                                    <strong>{memberMap[ex.excluded_membership_id] || '—'}</strong>
+                                </span>
+                                {canEdit && (
+                                    <button className="btn-remove" onClick={() => handleRemove(ex.id)}>
+                                        {t('members.remove')}
+                                    </button>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
+
+            {canEdit && (
+                <form className="exclusion-form" onSubmit={handleAdd}>
+                    <select value={giverId} onChange={e => setGiverId(e.target.value)} required>
+                        <option value="">{t('exclusions.selectGiver')}</option>
+                        {memberships.map(m => (
+                            <option key={m.id} value={m.id}>{memberMap[m.id]}</option>
+                        ))}
+                    </select>
+                    <span className="exclusion-arrow">→</span>
+                    <select value={excludedId} onChange={e => setExcludedId(e.target.value)} required>
+                        <option value="">{t('exclusions.selectExcluded')}</option>
+                        {memberships.filter(m => m.id !== giverId).map(m => (
+                            <option key={m.id} value={m.id}>{memberMap[m.id]}</option>
+                        ))}
+                    </select>
+                    <label className="exclusion-bidi">
+                        <input
+                            type="checkbox"
+                            checked={bidirectional}
+                            onChange={e => setBidirectional(e.target.checked)}
+                        />
+                        {t('exclusions.bidirectional')}
+                    </label>
+                    <button type="submit" disabled={adding}>
+                        {adding ? t('app.loading') : t('exclusions.add')}
+                    </button>
+                    {error && <p className="error-msg">{error}</p>}
+                </form>
+            )}
+
+            {!canEdit && action.status !== 'SETUP' && (
+                <p className="text-muted">{t('exclusions.locked')}</p>
             )}
         </div>
     )
