@@ -1,0 +1,75 @@
+.page-container {
+    max-width: 800px;
+    margin: var(--space-xl) auto;
+    padding: 0 var(--space-md);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.page-header h1 {
+    color: var(--color-primary);
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-lg);
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-md);
+}
+
+.action-card {
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+}
+
+.action-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.action-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.form-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 400px;
+}
+
+.form-vertical label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.form-vertical input {
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.form-vertical button {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-sm);
+}
