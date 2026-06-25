@@ -76,19 +76,19 @@
 |---|---|---|---|---|
 | authService.js (register, login, logout, reset, profil) | 0.75h | 0.75h | 23.06.2026 | ✅ |
 | LoginPage.jsx | 0.5h | 0.5h | 23.06.2026 | ✅ |
-| RegisterPage.jsx | 0.5h | | | |
-| ForgotPasswordPage.jsx + ResetPasswordPage.jsx | 0.5h | | | |
-| actionsService.js (CRUD) | 0.75h | | | |
-| ActionsListPage.jsx | 0.75h | | | |
-| CreateActionPage.jsx | 0.5h | | | |
-| memberService.js (getMembers, removeMember) | 0.5h | | | |
-| wishlistService.js (getWishlist, saveWishlist) | 0.5h | | | |
-| ActionDetailPage.jsx – Tab Mitglieder | 1h | | | |
-| ActionDetailPage.jsx – Tab Ausschlüsse | 1h | | | |
-| ActionDetailPage.jsx – Tab Vorgaben | 0.5h | | | |
-| ActionDetailPage.jsx – Tab Wunschzettel | 0.5h | | | |
-| ActionDetailPage.jsx – Tab Zuweisung | 0.5h | | | |
-| Modal-Komponente für Bestätigungsdialoge | 0.5h | | | |
+| RegisterPage.jsx | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| ForgotPasswordPage.jsx + ResetPasswordPage.jsx | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| actionsService.js (CRUD) | 0.75h | 1.5h | 25.06.2026 | ✅ |
+| ActionsListPage.jsx | 0.75h | 0.75h | 25.06.2026 | ✅ |
+| CreateActionPage.jsx | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| memberService.js (getMembers, removeMember) | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| wishlistService.js (getWishlist, saveWishlist) | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| ActionDetailPage.jsx – Tab Mitglieder | 1h | 1h | 25.06.2026 | ✅ |
+| ActionDetailPage.jsx – Tab Ausschlüsse | 1h | 1h | 25.06.2026 | ✅ |
+| ActionDetailPage.jsx – Tab Vorgaben | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| ActionDetailPage.jsx – Tab Wunschzettel | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| ActionDetailPage.jsx – Tab Zuweisung | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| Modal-Komponente für Bestätigungsdialoge | 0.5h | 0.5h | 25.06.2026 | ✅ |
 
 ---
 
@@ -96,12 +96,12 @@
 
 | Task | Geschätzt | Effektiv | Datum | Status |
 |---|---|---|---|---|
-| drawService.js (RPC-Aufruf) | 0.25h | | | |
-| Auslosung in ActionDetailPage integrieren + testen | 0.5h | | | |
-| Edge Function send-assignment-email erstellen | 1h | | | |
-| Resend Account einrichten + API Key | 0.25h | | | |
-| Edge Function deployen + testen | 0.5h | | | |
-| assignmentService.js (getMyAssignment) | 0.5h | | | |
+| drawService.js (RPC-Aufruf) | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| Auslosung in ActionDetailPage integrieren + testen | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| Edge Function send-assignment-email erstellen | 1h | 1h | 25.06.2026 | ✅ |
+| Resend Account einrichten + API Key | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| Edge Function deployen + testen | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| assignmentService.js (getMyAssignment) | 0.5h | 0.5h | 25.06.2026 | ✅ |
 
 ---
 
@@ -109,9 +109,9 @@
 
 | Task | Geschätzt | Effektiv | Datum | Status |
 |---|---|---|---|---|
-| invitationService.js (Einladung erstellen, Token prüfen) | 0.5h | | | |
-| InvitationPage.jsx (Gast / Login / Register Optionen) | 1h | | | |
-| Einladungs-Flow testen (E-Mail + Link) | 0.5h | | | |
+| invitationService.js (Einladung erstellen, Token prüfen) | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| InvitationPage.jsx (Gast / Login / Register Optionen) | 1h | 1h | 25.06.2026 | ✅ |
+| Einladungs-Flow testen (E-Mail + Link) | 0.5h | 0.5h | 25.06.2026 | ✅ |
 
 ---
 
@@ -119,14 +119,14 @@
 
 | Task | Geschätzt | Effektiv | Datum | Status |
 |---|---|---|---|---|
-| frontend-ci.yml erstellen | 0.25h | | | |
-| supabase-deploy.yml erstellen | 0.25h | | | |
-| GitHub Secrets konfigurieren | 0.25h | | | |
-| CI Pipelines testen (grüner Build) | 0.25h | | | |
-| Dockerfile (Frontend, mehrstufig) erstellen | 0.5h | | | |
-| nginx.conf erstellen | 0.25h | | | |
-| docker-compose.yml erstellen | 0.25h | | | |
-| Docker-Build lokal testen | 0.25h | | | |
+| frontend-ci.yml erstellen | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| supabase-deploy.yml erstellen | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| GitHub Secrets konfigurieren | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| CI Pipelines testen (grüner Build) | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| Dockerfile (Frontend, mehrstufig) erstellen | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| nginx.conf erstellen | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| docker-compose.yml erstellen | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| Docker-Build lokal testen | 0.25h | 0.25h | 25.06.2026 | ✅ |
 
 ---
 
@@ -134,11 +134,11 @@
 
 | Task | Geschätzt | Effektiv | Datum | Status |
 |---|---|---|---|---|
-| README.md vervollständigen (Architektur, Deployment, Review) | 0.5h | | | |
-| Kritischen Review schreiben | 0.5h | | | |
-| Vollständigen End-to-End-Test durchführen | 0.5h | | | |
-| .env-Datei für Lehrer vorbereiten | 0.25h | | | |
-| Finaler Commit + Tag, Abgabe | 0.25h | | | |
+| README.md vervollständigen (Architektur, Deployment, Review) | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| Kritischen Review schreiben | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| Vollständigen End-to-End-Test durchführen | 0.5h | 0.5h | 25.06.2026 | ✅ |
+| .env-Datei für Lehrer vorbereiten | 0.25h | 0.25h | 25.06.2026 | ✅ |
+| Finaler Commit + Tag, Abgabe | 0.25h | 0.25h | 25.06.2026 | ✅ |
 
 ---
 
@@ -148,11 +148,11 @@
 
 | Datum | Beschreibung | Geschätzt | Effektiv | Differenz |
 |---|---|---|---|---|
-| 22.06.2026 | Initial Commit, Git-Branches | 0.5h | | |
-| 22.06.2026 | .gitignore | 0.25h | | |
-| 22.06.2026 | README.md | 0.5h | | |
-| 22.06.2026 | User Stories | 1h | | |
-| 22.06.2026 | Datenmodell | 0.5h | | |
-| 22.06.2026 | Arbeitsplanung | 0.25h | | |
+| 22.06.2026 | Initial Commit, Git-Branches | 0.5h | 0.5h | ✅ |
+| 22.06.2026 | .gitignore | 0.25h | 0.25 | ✅ |
+| 22.06.2026 | README.md | 0.5h | 0.5h | ✅ |
+| 22.06.2026 | User Stories | 1h | 1h | ✅ |
+| 22.06.2026 | Datenmodell | 0.5h | 0.5h | ✅ |
+| 22.06.2026 | Arbeitsplanung | 0.25h | 0.25h | ✅ |
 | | | | | | |
 | | | **Total** | **~27h** | | |
