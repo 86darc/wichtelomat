@@ -49,6 +49,17 @@
             "MEMBER": "Member"
         }
     },
+    "invite": {
+        "title": "Invite",
+        "email": "Email address",
+        "submit": "Invite",
+        "success": "Invitation sent.",
+        "copyLink": "Copy link",
+        "linkCopied": "Copied!",
+        "joinAction": "Join exchange",
+        "loginToJoin": "Sign in or register to join.",
+        "alreadyMember": "You are already a member of this exchange."
+    },
     "exclusions": {
         "title": "Exclusions",
         "add": "Add exclusion"

@@ -49,6 +49,17 @@
             "MEMBER": "Mitglied"
         }
     },
+    "invite": {
+        "title": "Einladen",
+        "email": "E-Mail-Adresse",
+        "submit": "Einladen",
+        "success": "Einladung gesendet.",
+        "copyLink": "Link kopieren",
+        "linkCopied": "Kopiert!",
+        "joinAction": "Aktion beitreten",
+        "loginToJoin": "Melde dich an oder registriere dich, um beizutreten.",
+        "alreadyMember": "Du bist bereits Mitglied dieser Aktion."
+    },
     "exclusions": {
         "title": "Ausschlüsse",
         "add": "Ausschluss hinzufügen"

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
 import { getAction, getMemberships, updateAction } from '../../services/actionsService'
 import { startDraw } from '../../services/drawService'
+import { createInvitation, sendInvitationEmail } from '../../services/invitationService'
 
 const TABS = [
     { key: 'members',    labelKey: 'members.title' },
@@ -100,21 +101,14 @@ function ActionDetailPage() {
 
             <div className="tab-content">
                 {activeTab === 'members' && (
-                    <ul className="member-list">
-                        {memberships.map(m => (
-                            <li key={m.id} className="member-item">
-                                <span className="member-name">
-                                    {m.is_guest ? m.guest_email : (m.display_name || '—')}
-                                    {m.user_id === currentUserId && (
-                                        <span className="member-you"> ({t('members.you')})</span>
-                                    )}
-                                </span>
-                                <span className={`role-badge role-${m.role_in_action.toLowerCase()}`}>
-                                    {t(`members.role.${m.role_in_action}`)}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
+                    <MembersTab
+                        memberships={memberships}
+                        currentUserId={currentUserId}
+                        isAdmin={isAdmin}
+                        action={action}
+                        onUpdate={loadData}
+                        t={t}
+                    />
                 )}
 
                 {activeTab === 'settings' && (
@@ -209,6 +203,88 @@ function VorgabenTab({ action, isAdmin, onUpdate, t }) {
                     <p>{t('actions.handoverDate')}: <strong>{action.handover_date}</strong></p>
                     {action.max_cost && <p>{t('actions.maxCost')}: <strong>CHF {Number(action.max_cost).toFixed(2)}</strong></p>}
                     <p className="text-muted">{t('actions.settingsLocked')}</p>
+                </div>
+            )}
+        </div>
+    )
+}
+
+function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }) {
+    const [inviteEmail, setInviteEmail] = useState('')
+    const [inviting, setInviting] = useState(false)
+    const [inviteLink, setInviteLink] = useState(null)
+    const [inviteError, setInviteError] = useState(null)
+    const [copied, setCopied] = useState(false)
+
+    async function handleInvite(e) {
+        e.preventDefault()
+        setInviting(true)
+        setInviteError(null)
+        setInviteLink(null)
+        try {
+            const inv = await createInvitation(action.id, inviteEmail)
+            const link = `${window.location.origin}/invitation/${inv.token}`
+            setInviteLink(link)
+            setInviteEmail('')
+            try { await sendInvitationEmail(inv.token, inv.guest_email, action.name) } catch {}
+            onUpdate()
+        } catch (err) {
+            setInviteError(err.message)
+        } finally {
+            setInviting(false)
+        }
+    }
+
+    function copyLink() {
+        navigator.clipboard.writeText(inviteLink)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    }
+
+    return (
+        <div className="members-tab">
+            <ul className="member-list">
+                {memberships.map(m => (
+                    <li key={m.id} className="member-item">
+                        <span className="member-name">
+                            {m.is_guest ? m.guest_email : (m.display_name || '—')}
+                            {m.user_id === currentUserId && (
+                                <span className="member-you"> ({t('members.you')})</span>
+                            )}
+                        </span>
+                        <span className={`role-badge role-${m.role_in_action.toLowerCase()}`}>
+                            {t(`members.role.${m.role_in_action}`)}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+
+            {isAdmin && action.status === 'SETUP' && (
+                <div className="invite-section">
+                    <form className="invite-form" onSubmit={handleInvite}>
+                        <input
+                            type="email"
+                            value={inviteEmail}
+                            onChange={e => setInviteEmail(e.target.value)}
+                            placeholder={t('invite.email')}
+                            required
+                        />
+                        <button type="submit" disabled={inviting}>
+                            {inviting ? t('app.loading') : t('invite.submit')}
+                        </button>
+                    </form>
+                    {inviteLink && (
+                        <div className="invite-link-box">
+                            <span className="success-msg">{t('invite.success')}</span>
+                            <div className="invite-link-row">
+                                <input readOnly value={inviteLink} className="invite-link-input" />
+                                <button type="button" onClick={copyLink} className="btn-copy">
+                                    {copied ? t('invite.linkCopied') : t('invite.copyLink')}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {inviteError && <p className="error-msg">{inviteError}</p>}
                 </div>
             )}
         </div>

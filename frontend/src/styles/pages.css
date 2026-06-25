@@ -242,3 +242,100 @@
     color: var(--color-success);
     font-size: var(--font-size-sm);
 }
+
+/* Mitglieder-Tab */
+
+.members-tab {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.invite-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.invite-form {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.invite-form input {
+    flex: 1;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+}
+
+.invite-form button {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.invite-link-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.invite-link-row {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.invite-link-input {
+    flex: 1;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+}
+
+.btn-copy {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+}
+
+/* InvitationPage */
+
+.invitation-action-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+}
+
+.btn-full {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    text-align: center;
+}
+
+.btn-full:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

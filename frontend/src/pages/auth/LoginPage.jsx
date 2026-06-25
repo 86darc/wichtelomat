@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { login } from '../../services/authService'
 
 function LoginPage() {
     const { t } = useTranslation()
     const navigate = useNavigate()
+    const location = useLocation()
+    const redirect = new URLSearchParams(location.search).get('redirect') || '/'
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
@@ -17,7 +19,7 @@ function LoginPage() {
         setError(null)
         try {
             await login(email, password)
-            navigate('/')
+            navigate(redirect)
         } catch (err) {
             setError(err.message)
         } finally {
