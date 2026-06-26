@@ -11,6 +11,9 @@ frontend/.env.local
 # Root
 .env
 .env.local
+/node_modules/
+/package-lock.json
+/package.json
 
 # IDE
 .idea/

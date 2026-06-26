@@ -1,0 +1,112 @@
+{
+    "app": {
+        "title": "Wichtelomat",
+        "loading": "Laden...",
+        "comingSoon": "Demnächst verfügbar."
+    },
+    "auth": {
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "register": "Registrieren",
+        "email": "E-Mail-Adresse",
+        "password": "Passwort",
+        "name": "Name",
+        "forgotPassword": "Passwort vergessen?",
+        "noAccount": "Noch kein Konto? Registrieren",
+        "resetPassword": "Passwort zurücksetzen",
+        "confirmEmail": "Bitte bestätige deine E-Mail-Adresse über den Link den wir dir gesendet haben.",
+        "resetSent": "Falls ein Konto mit dieser E-Mail existiert, haben wir dir einen Link gesendet."
+    },
+    "actions": {
+        "create": "Wichtelaktion erstellen",
+        "myActions": "Meine Aktionen",
+        "name": "Name der Aktion",
+        "handoverDate": "Übergabedatum",
+        "maxCost": "Max. Kosten (optional)",
+        "start": "Aktion starten",
+        "confirmStart": "Aktion wirklich starten? Das kann nicht rückgängig gemacht werden.",
+        "cancel": "Aktion abbrechen",
+        "confirmCancel": "Aktion wirklich abbrechen? Alle Aktionsdaten werden gelöscht.",
+        "backToList": "Zurück zur Übersicht",
+        "settingsTab": "Einstellungen",
+        "saveSettings": "Speichern",
+        "settingsSaved": "Gespeichert.",
+        "settingsLocked": "Einstellungen können nach dem Start nicht mehr geändert werden.",
+        "minMembers": "Mindestens 2 Mitglieder nötig.",
+        "delete": "Aktion löschen",
+        "confirmDelete": "Aktion wirklich löschen? Alle Mitgliedschaften, Zuweisungen und Wunschzettel werden unwiderruflich entfernt.",
+        "deleting": "Wird gelöscht...",
+        "deleteDesc": "Löscht die gesamte Aktion und alle zugehörigen Daten dauerhaft.",
+        "noActions": "Noch keine Aktionen vorhanden.",
+        "status": {
+            "SETUP": "Einrichtung",
+            "ACTIVE": "Aktiv",
+            "COMPLETED": "Abgeschlossen",
+            "CANCELLED": "Abgebrochen"
+        }
+    },
+    "members": {
+        "title": "Mitglieder",
+        "invite": "Einladen",
+        "remove": "Entfernen",
+        "confirmRemove": "Dieses Mitglied wirklich entfernen?",
+        "you": "Du",
+        "role": {
+            "ADMIN": "Admin",
+            "MEMBER": "Mitglied"
+        }
+    },
+    "invite": {
+        "title": "Einladen",
+        "name": "Name",
+        "email": "E-Mail-Adresse",
+        "submit": "Einladen",
+        "success": "Einladung gesendet.",
+        "copyLink": "Link kopieren",
+        "linkCopied": "Kopiert!",
+        "joinAction": "Aktion beitreten",
+        "loginToJoin": "Melde dich an oder registriere dich, um beizutreten.",
+        "alreadyMember": "Du bist bereits Mitglied dieser Aktion.",
+        "invited": "Eingeladen",
+        "rejected": "Abgelehnt"
+    },
+    "exclusions": {
+        "title": "Ausschlüsse",
+        "add": "Hinzufügen",
+        "none": "Keine Ausschlüsse definiert.",
+        "selectGiver": "Wer nicht wichteln soll für...",
+        "selectExcluded": "...dieses Mitglied",
+        "bidirectional": "Beidseitig",
+        "locked": "Ausschlüsse können nach dem Start nicht mehr geändert werden."
+    },
+    "wishlist": {
+        "title": "Wunschzettel",
+        "hint": "Nur bis zum Aktionsstart bearbeitbar.",
+        "save": "Speichern",
+        "empty": "Kein Wunschzettel vorhanden."
+    },
+    "assignment": {
+        "title": "Meine Zuweisung",
+        "youGiftTo": "Du wichtelst für:",
+        "pendingDraw": "Sobald die Auslosung stattgefunden hat, wird dir hier angezeigt, für wen du wichtelst."
+    },
+    "profile": {
+        "title": "Mein Profil",
+        "save": "Profil speichern",
+        "saved": "Profil gespeichert.",
+        "changeAvatar": "Foto ändern",
+        "avatarError": "Profilbild konnte nicht gespeichert werden. Bitte stelle sicher, dass der 'avatars'-Bucket in Supabase Storage existiert.",
+        "passwordSection": "Passwort ändern",
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "savePassword": "Passwort ändern",
+        "passwordSaved": "Passwort geändert.",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+        "emailNote": "Eine Bestätigung wird an die neue Adresse gesendet."
+    },
+    "errors": {
+        "generic": "Ein Fehler ist aufgetreten.",
+        "tooManyExclusions": "Zu viele Ausschlüsse – bitte überarbeiten.",
+        "invitationExpired": "Dieser Einladungslink ist abgelaufen."
+    }
+}

@@ -1,0 +1,112 @@
+{
+    "app": {
+        "title": "Wichtelomat",
+        "loading": "Loading...",
+        "comingSoon": "Coming soon."
+    },
+    "auth": {
+        "login": "Sign in",
+        "logout": "Sign out",
+        "register": "Register",
+        "email": "Email address",
+        "password": "Password",
+        "name": "Name",
+        "forgotPassword": "Forgot password?",
+        "noAccount": "No account yet? Register",
+        "resetPassword": "Reset password",
+        "confirmEmail": "Please confirm your email address via the link we sent you.",
+        "resetSent": "If an account with this email exists, we've sent you a link."
+    },
+    "actions": {
+        "create": "Create gift exchange",
+        "myActions": "My exchanges",
+        "name": "Exchange name",
+        "handoverDate": "Handover date",
+        "maxCost": "Max. cost (optional)",
+        "start": "Start exchange",
+        "confirmStart": "Really start the exchange? This cannot be undone.",
+        "cancel": "Cancel exchange",
+        "confirmCancel": "Really cancel? All exchange data will be deleted.",
+        "backToList": "Back to list",
+        "settingsTab": "Settings",
+        "saveSettings": "Save",
+        "settingsSaved": "Saved.",
+        "settingsLocked": "Settings cannot be changed after the exchange has started.",
+        "minMembers": "At least 2 members required.",
+        "delete": "Delete exchange",
+        "confirmDelete": "Really delete this exchange? All memberships, assignments and wishlists will be permanently removed.",
+        "deleting": "Deleting...",
+        "deleteDesc": "Permanently deletes the entire exchange and all associated data.",
+        "noActions": "No exchanges yet.",
+        "status": {
+            "SETUP": "Setup",
+            "ACTIVE": "Active",
+            "COMPLETED": "Completed",
+            "CANCELLED": "Cancelled"
+        }
+    },
+    "members": {
+        "title": "Members",
+        "invite": "Invite",
+        "remove": "Remove",
+        "confirmRemove": "Really remove this member?",
+        "you": "You",
+        "role": {
+            "ADMIN": "Admin",
+            "MEMBER": "Member"
+        }
+    },
+    "invite": {
+        "title": "Invite",
+        "name": "Name",
+        "email": "Email address",
+        "submit": "Invite",
+        "success": "Invitation sent.",
+        "copyLink": "Copy link",
+        "linkCopied": "Copied!",
+        "joinAction": "Join exchange",
+        "loginToJoin": "Sign in or register to join.",
+        "alreadyMember": "You are already a member of this exchange.",
+        "invited": "Invited",
+        "rejected": "Declined"
+    },
+    "exclusions": {
+        "title": "Exclusions",
+        "add": "Add",
+        "none": "No exclusions defined.",
+        "selectGiver": "Who should not gift to...",
+        "selectExcluded": "...this member",
+        "bidirectional": "Bidirectional",
+        "locked": "Exclusions cannot be changed after the exchange has started."
+    },
+    "wishlist": {
+        "title": "Wishlist",
+        "hint": "Editable only until the exchange starts.",
+        "save": "Save",
+        "empty": "No wishlist available."
+    },
+    "assignment": {
+        "title": "My assignment",
+        "youGiftTo": "You're gifting to:",
+        "pendingDraw": "Once the draw has taken place, the person you're gifting to will be shown here."
+    },
+    "profile": {
+        "title": "My Profile",
+        "save": "Save profile",
+        "saved": "Profile saved.",
+        "changeAvatar": "Change photo",
+        "avatarError": "Could not save profile picture. Please ensure the 'avatars' bucket exists in Supabase Storage.",
+        "passwordSection": "Change password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "savePassword": "Change password",
+        "passwordSaved": "Password changed.",
+        "passwordMismatch": "Passwords do not match.",
+        "emailNote": "A confirmation will be sent to the new address."
+    },
+    "errors": {
+        "generic": "An error occurred.",
+        "tooManyExclusions": "Too many exclusions – please revise.",
+        "invitationExpired": "This invitation link has expired."
+    }
+}
