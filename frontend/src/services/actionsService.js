@@ -1,4 +1,5 @@
 import { supabase } from '../utils/supabaseClient'
+import { ROLES, INVITATION_STATUS } from '../constants/actionStatus'
 
 // CREATE: Neue Aktion + Admin-Membership (UC-05)
 export async function createAction(name, handoverDate, maxCost = null) {
@@ -22,7 +23,7 @@ export async function createAction(name, handoverDate, maxCost = null) {
         .insert({
             action_id: action.id,
             user_id: user.id,
-            role_in_action: 'ADMIN'
+            role_in_action: ROLES.ADMIN
         })
     if (e2) throw e2
 
@@ -144,7 +145,7 @@ export async function getPendingInvitations(actionId) {
         .from('invitations')
         .select('id, guest_email, invited_name, status, created_at')
         .eq('action_id', actionId)
-        .in('status', ['PENDING', 'REJECTED'])
+        .in('status', [INVITATION_STATUS.PENDING, INVITATION_STATUS.REJECTED])
     if (error) throw error
     return data || []
 }

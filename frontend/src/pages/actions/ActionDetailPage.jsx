@@ -11,6 +11,8 @@ import {
 import { startDraw } from '../../services/drawService'
 import { createInvitation, sendInvitationEmail } from '../../services/invitationService'
 import InlineDatePicker from '../../components/InlineDatePicker'
+import { formatDate } from '../../utils/dateFormatter'
+import { ACTION_STATUS, ROLES, INVITATION_STATUS } from '../../constants/actionStatus'
 
 const TABS = [
     { key: 'members',    labelKey: 'members.title' },
@@ -19,12 +21,6 @@ const TABS = [
     { key: 'wishlist',   labelKey: 'wishlist.title' },
     { key: 'assignment', labelKey: 'assignment.title' },
 ]
-
-function formatDate(dateStr) {
-    if (!dateStr) return ''
-    const [y, m, d] = dateStr.split('-')
-    return `${d}.${m}.${y}`
-}
 
 function ActionDetailPage() {
     const { id } = useParams()
@@ -64,8 +60,8 @@ function ActionDetailPage() {
 
     const currentUserId = session?.user?.id
     const myMembership = memberships.find(m => m.user_id === currentUserId)
-    const isAdmin = myMembership?.role_in_action === 'ADMIN'
-    const canStart = isAdmin && action?.status === 'SETUP' && memberships.length >= 2
+    const isAdmin = myMembership?.role_in_action === ROLES.ADMIN
+    const canStart = isAdmin && action?.status === ACTION_STATUS.SETUP && memberships.length >= 2
 
     async function handleStart() {
         if (!window.confirm(t('actions.confirmStart'))) return
@@ -162,7 +158,7 @@ function ActionDetailPage() {
                 )}
             </div>
 
-            {isAdmin && action.status === 'SETUP' && (
+            {isAdmin && action.status === ACTION_STATUS.SETUP && (
                 <div>
                     {memberships.length < 2 && (
                         <p className="text-muted">{t('actions.minMembers')}</p>
@@ -192,23 +188,25 @@ function EinstellungenTab({ action, isAdmin, onUpdate, onDeleted, t }) {
     const [date, setDate] = useState(action.handover_date)
     const [cost, setCost] = useState(action.max_cost ?? '')
     const [saving, setSaving] = useState(false)
-    const [saveMsg, setSaveMsg] = useState(null)
+    const [saved, setSaved] = useState(false)
+    const [saveError, setSaveError] = useState(null)
     const [deleting, setDeleting] = useState(false)
     const [deleteError, setDeleteError] = useState(null)
 
     async function handleSave(e) {
         e.preventDefault()
         setSaving(true)
-        setSaveMsg(null)
+        setSaved(false)
+        setSaveError(null)
         try {
             await updateAction(action.id, {
                 handover_date: date,
                 max_cost: cost === '' ? null : Number(cost)
             })
-            setSaveMsg('ok')
+            setSaved(true)
             onUpdate()
         } catch (err) {
-            setSaveMsg(err.message)
+            setSaveError(err.message)
         } finally {
             setSaving(false)
         }
@@ -227,7 +225,7 @@ function EinstellungenTab({ action, isAdmin, onUpdate, onDeleted, t }) {
         }
     }
 
-    const canEdit = isAdmin && action.status === 'SETUP'
+    const canEdit = isAdmin && action.status === ACTION_STATUS.SETUP
 
     return (
         <div className="vorgaben-tab">
@@ -252,8 +250,8 @@ function EinstellungenTab({ action, isAdmin, onUpdate, onDeleted, t }) {
                                 placeholder="—"
                                 className="date-picker-input cost-input-stretch"
                             />
-                            {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
-                            {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
+                            {saved && <p className="success-msg">{t('actions.settingsSaved')}</p>}
+                            {saveError && <p className="error-msg">{saveError}</p>}
                             {deleteError && <p className="error-msg">{deleteError}</p>}
                             <div className="einstellungen-actions">
                                 <button
@@ -313,17 +311,19 @@ function AssignmentTab({ action, myMembership, t }) {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        if (action.status === 'SETUP' || !myMembership) {
+        if (action.status === ACTION_STATUS.SETUP || !myMembership) {
             setLoading(false)
             return
         }
+        let isMounted = true
         getMyAssignment(myMembership.id)
-            .then(setAssignment)
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false))
+            .then(data => { if (isMounted) setAssignment(data) })
+            .catch(err => { if (isMounted) setError(err.message) })
+            .finally(() => { if (isMounted) setLoading(false) })
+        return () => { isMounted = false }
     }, [action.status, myMembership?.id])
 
-    if (action.status === 'SETUP') {
+    if (action.status === ACTION_STATUS.SETUP) {
         return <p className="text-muted">{t('assignment.pendingDraw')}</p>
     }
     if (loading) return <p>{t('app.loading')}</p>
@@ -361,10 +361,12 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
     )
 
     useEffect(() => {
+        let isMounted = true
         getExclusions(action.id)
-            .then(setExclusions)
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false))
+            .then(data => { if (isMounted) setExclusions(data) })
+            .catch(err => { if (isMounted) setError(err.message) })
+            .finally(() => { if (isMounted) setLoading(false) })
+        return () => { isMounted = false }
     }, [action.id])
 
     async function handleAdd(e) {
@@ -396,7 +398,7 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
 
     if (loading) return <p>{t('app.loading')}</p>
 
-    const canEdit = isAdmin && action.status === 'SETUP'
+    const canEdit = isAdmin && action.status === ACTION_STATUS.SETUP
 
     return (
         <div className="exclusions-tab">
@@ -444,7 +446,7 @@ function ExclusionsTab({ action, memberships, isAdmin, t }) {
                 </form>
             )}
 
-            {!canEdit && action.status !== 'SETUP' && (
+            {!canEdit && action.status !== ACTION_STATUS.SETUP && (
                 <p className="text-muted">{t('exclusions.locked')}</p>
             )}
         </div>
@@ -455,25 +457,29 @@ function WishlistTab({ action, myMembership, t }) {
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
-    const [saveMsg, setSaveMsg] = useState(null)
+    const [saved, setSaved] = useState(false)
+    const [saveError, setSaveError] = useState(null)
 
     useEffect(() => {
         if (!myMembership) { setLoading(false); return }
+        let isMounted = true
         getMyWishlist(myMembership.id)
-            .then(setContent)
-            .catch(() => {})
-            .finally(() => setLoading(false))
+            .then(data => { if (isMounted) setContent(data) })
+            .catch(err => { if (isMounted) setSaveError(err.message) })
+            .finally(() => { if (isMounted) setLoading(false) })
+        return () => { isMounted = false }
     }, [myMembership?.id])
 
     async function handleSave(e) {
         e.preventDefault()
         setSaving(true)
-        setSaveMsg(null)
+        setSaved(false)
+        setSaveError(null)
         try {
             await saveWishlist(myMembership.id, content)
-            setSaveMsg('ok')
+            setSaved(true)
         } catch (err) {
-            setSaveMsg(err.message)
+            setSaveError(err.message)
         } finally {
             setSaving(false)
         }
@@ -481,7 +487,7 @@ function WishlistTab({ action, myMembership, t }) {
 
     if (loading) return <p>{t('app.loading')}</p>
 
-    const editable = action.status === 'SETUP'
+    const editable = action.status === ACTION_STATUS.SETUP
 
     if (!editable) {
         return (
@@ -506,8 +512,8 @@ function WishlistTab({ action, myMembership, t }) {
                 rows={8}
                 placeholder="…"
             />
-            {saveMsg === 'ok' && <p className="success-msg">{t('actions.settingsSaved')}</p>}
-            {saveMsg && saveMsg !== 'ok' && <p className="error-msg">{saveMsg}</p>}
+            {saved && <p className="success-msg">{t('actions.settingsSaved')}</p>}
+            {saveError && <p className="error-msg">{saveError}</p>}
             <div className="form-footer">
                 <button type="submit" className="btn-primary" disabled={saving}>
                     {saving ? t('app.loading') : t('wishlist.save')}
@@ -527,11 +533,12 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
     const [pendingInvitations, setPendingInvitations] = useState([])
 
     useEffect(() => {
-        if (isAdmin) {
-            getPendingInvitations(action.id)
-                .then(setPendingInvitations)
-                .catch(() => {})
-        }
+        if (!isAdmin) return
+        let isMounted = true
+        getPendingInvitations(action.id)
+            .then(data => { if (isMounted) setPendingInvitations(data) })
+            .catch(err => { console.error('Pending invitations konnten nicht geladen werden:', err) })
+        return () => { isMounted = false }
     }, [action.id, isAdmin])
 
     async function handleInvite(e) {
@@ -545,9 +552,15 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
             setInviteLink(link)
             setInviteEmail('')
             setInviteName('')
-            try { await sendInvitationEmail(inv.token, inv.guest_email, action.name, inviteName) } catch {}
+            try {
+                await sendInvitationEmail(inv.token, inv.guest_email, action.name, inviteName)
+            } catch (emailErr) {
+                console.error('Einladungs-E-Mail konnte nicht gesendet werden:', emailErr)
+            }
             onUpdate()
-            getPendingInvitations(action.id).then(setPendingInvitations).catch(() => {})
+            getPendingInvitations(action.id)
+                .then(setPendingInvitations)
+                .catch(err => { console.error('Pending invitations konnten nicht geladen werden:', err) })
         } catch (err) {
             setInviteError(err.message)
         } finally {
@@ -563,7 +576,7 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
 
     return (
         <div className="members-tab">
-            {isAdmin && action.status === 'SETUP' && (
+            {isAdmin && action.status === ACTION_STATUS.SETUP && (
                 <div className="invite-section">
                     <form className="invite-form" onSubmit={handleInvite}>
                         <input
@@ -622,8 +635,8 @@ function MembersTab({ memberships, currentUserId, isAdmin, action, onUpdate, t }
                             )}
                             <span className="member-email-muted">{inv.guest_email}</span>
                         </div>
-                        <span className={`invite-tag ${inv.status === 'PENDING' ? 'tag-invited' : 'tag-rejected'}`}>
-                            {inv.status === 'PENDING' ? t('invite.invited') : t('invite.rejected')}
+                        <span className={`invite-tag ${inv.status === INVITATION_STATUS.PENDING ? 'tag-invited' : 'tag-rejected'}`}>
+                            {inv.status === INVITATION_STATUS.PENDING ? t('invite.invited') : t('invite.rejected')}
                         </span>
                     </li>
                 ))}

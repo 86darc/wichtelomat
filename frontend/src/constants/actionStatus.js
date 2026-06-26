@@ -1,0 +1,17 @@
+export const ACTION_STATUS = {
+    SETUP: 'SETUP',
+    ACTIVE: 'ACTIVE',
+    COMPLETED: 'COMPLETED',
+    CANCELLED: 'CANCELLED',
+}
+
+export const ROLES = {
+    ADMIN: 'ADMIN',
+    MEMBER: 'MEMBER',
+}
+
+export const INVITATION_STATUS = {
+    PENDING: 'PENDING',
+    ACCEPTED: 'ACCEPTED',
+    REJECTED: 'REJECTED',
+}

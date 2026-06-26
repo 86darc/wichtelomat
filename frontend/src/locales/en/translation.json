@@ -13,7 +13,9 @@
         "name": "Name",
         "forgotPassword": "Forgot password?",
         "noAccount": "No account yet? Register",
-        "resetPassword": "Reset password"
+        "resetPassword": "Reset password",
+        "confirmEmail": "Please confirm your email address via the link we sent you.",
+        "resetSent": "If an account with this email exists, we've sent you a link."
     },
     "actions": {
         "create": "Create gift exchange",
@@ -35,6 +37,7 @@
         "confirmDelete": "Really delete this exchange? All memberships, assignments and wishlists will be permanently removed.",
         "deleting": "Deleting...",
         "deleteDesc": "Permanently deletes the entire exchange and all associated data.",
+        "noActions": "No exchanges yet.",
         "status": {
             "SETUP": "Setup",
             "ACTIVE": "Active",

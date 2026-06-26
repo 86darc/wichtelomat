@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
 import { getMyActions } from '../../services/actionsService'
-import { logout } from '../../services/authService'
+import { formatDate } from '../../utils/dateFormatter'
 
 function ActionsListPage() {
     const { t } = useTranslation()
@@ -26,12 +26,6 @@ function ActionsListPage() {
         } finally {
             setLoading(false)
         }
-    }
-
-    function formatDate(dateStr) {
-        if (!dateStr) return ''
-        const [y, m, d] = dateStr.split('-')
-        return `${d}.${m}.${y}`
     }
 
     const displayName = session?.user?.user_metadata?.display_name || session?.user?.email || '?'
@@ -72,7 +66,7 @@ function ActionsListPage() {
             </div>
 
             {!loading && actions.length === 0 && (
-                <p>Noch keine Aktionen vorhanden.</p>
+                <p>{t('actions.noActions')}</p>
             )}
         </div>
     )

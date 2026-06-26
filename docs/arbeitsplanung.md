@@ -19,7 +19,8 @@
 | 7 – CI/CD & Docker            | GitHub Actions, Dockerfile                   | 2h              |
 | 8 – Abschluss                 | Review, README, E2E-Test                     | 2h              |
 | 9 – Überarbeitungen           | Profil-Seite, Einstellungen-Tab, Theme       | 2h              |
-| **Total**                     |                                              | **~29h**        |
+| 10 – Refactoring              | Code-Qualität, Utilities, i18n-Fixes         | 1h              |
+| **Total**                     |                                              | **~30h**        |
 
 ---
 
@@ -152,6 +153,20 @@
 
 ---
 
+### Phase 10 – Refactoring & Code-Qualität
+
+| Task                                                         | Geschätzt | Effektiv | Datum      | Status |
+| ------------------------------------------------------------ | --------- | -------- | ---------- | ------ |
+| formatDate in utils/dateFormatter.js ausgelagert             | 0.1h      | 0.1h     | 26.06.2026 | ✅     |
+| Constants-Datei für Status/Rollen angelegt (actionStatus.js) | 0.1h      | 0.1h     | 26.06.2026 | ✅     |
+| Hardcoded i18n-Strings in RegisterPage/ForgotPasswordPage/ActionsListPage gefixt | 0.1h | 0.15h | 26.06.2026 | ✅ |
+| Leere catch-Blöcke durch console.error ersetzt               | 0.1h      | 0.1h     | 26.06.2026 | ✅     |
+| isMounted-Cleanup in useEffects (4 Komponenten)              | 0.2h      | 0.25h    | 26.06.2026 | ✅     |
+| saveMsg 'ok' Magic-String durch boolean saved-State ersetzt  | 0.1h      | 0.1h     | 26.06.2026 | ✅     |
+| Per-Email Error-Handling in send-assignment-email Edge Fn    | 0.1h      | 0.1h     | 26.06.2026 | ✅     |
+
+---
+
 ## Stundenprotokoll
 
 | Datum      | Phase | Arbeitspaket                                                | Geschätzt | Effektiv |
@@ -220,4 +235,7 @@
 | 26.06.2026 | 9     | ProfilePage.jsx implementieren (Name, E-Mail, Passwort)     | 0.75h     | 1h       |
 | 26.06.2026 | 9     | Einstellungen-Tab in ActionDetailPage überarbeiten          | 0.5h      | 0.75h    |
 | 26.06.2026 | 9     | Weihnachts-Theme optimieren (CSS-Variablen, Animationen)    | 0.5h      | 0.5h     |
-| **Total**  |       |                                                             | **~29.25h** | **~30.8h** |
+| 26.06.2026 | 10    | formatDate auslagern, Constants-Datei, i18n-Fixes           | 0.3h      | 0.35h    |
+| 26.06.2026 | 10    | Leere catch-Blöcke, isMounted-Cleanup, saveMsg-Pattern      | 0.4h      | 0.45h    |
+| 26.06.2026 | 10    | Per-Email Error-Handling in Edge Function                   | 0.1h      | 0.1h     |
+| **Total**  |       |                                                             | **~30.05h** | **~31.7h** |

@@ -28,7 +28,7 @@ function ForgotPasswordPage() {
         return (
             <div className="auth-container">
                 <h1>{t('auth.resetPassword')}</h1>
-                <p>Falls ein Konto mit dieser E-Mail existiert, haben wir dir einen Link gesendet.</p>
+                <p>{t('auth.resetSent')}</p>
                 <Link to="/login">{t('auth.login')}</Link>
             </div>
         )

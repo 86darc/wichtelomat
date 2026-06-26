@@ -6,11 +6,10 @@ export async function startDraw(actionId) {
     if (error) throw error
     if (data?.error) throw new Error(data.error)
 
-    try {
-        await supabase.functions.invoke('send-assignment-email', {
-            body: { action_id: actionId }
-        })
-    } catch {}
+    const { error: emailError } = await supabase.functions.invoke('send-assignment-email', {
+        body: { action_id: actionId }
+    })
+    if (emailError) console.error('E-Mail-Versand fehlgeschlagen:', emailError)
 
     return data
 }

@@ -16,10 +16,12 @@ function InvitationPage() {
     const [joining, setJoining] = useState(false)
 
     useEffect(() => {
+        let isMounted = true
         getInvitation(token)
-            .then(setInvitation)
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false))
+            .then(data => { if (isMounted) setInvitation(data) })
+            .catch(err => { if (isMounted) setError(err.message) })
+            .finally(() => { if (isMounted) setLoading(false) })
+        return () => { isMounted = false }
     }, [token])
 
     async function handleJoin() {

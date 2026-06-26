@@ -13,7 +13,9 @@
         "name": "Name",
         "forgotPassword": "Passwort vergessen?",
         "noAccount": "Noch kein Konto? Registrieren",
-        "resetPassword": "Passwort zurücksetzen"
+        "resetPassword": "Passwort zurücksetzen",
+        "confirmEmail": "Bitte bestätige deine E-Mail-Adresse über den Link den wir dir gesendet haben.",
+        "resetSent": "Falls ein Konto mit dieser E-Mail existiert, haben wir dir einen Link gesendet."
     },
     "actions": {
         "create": "Wichtelaktion erstellen",
@@ -35,6 +37,7 @@
         "confirmDelete": "Aktion wirklich löschen? Alle Mitgliedschaften, Zuweisungen und Wunschzettel werden unwiderruflich entfernt.",
         "deleting": "Wird gelöscht...",
         "deleteDesc": "Löscht die gesamte Aktion und alle zugehörigen Daten dauerhaft.",
+        "noActions": "Noch keine Aktionen vorhanden.",
         "status": {
             "SETUP": "Einrichtung",
             "ACTIVE": "Aktiv",

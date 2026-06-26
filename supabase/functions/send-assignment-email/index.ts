@@ -68,26 +68,33 @@ serve(async (req) => {
                 ? `<p><strong>Wunschzettel:</strong></p><p style="white-space:pre-line;background:#f5f7fa;padding:12px;border-radius:4px">${wishlistContent}</p>`
                 : '<p style="color:#888">Kein Wunschzettel vorhanden.</p>'
 
-            await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${RESEND_API_KEY}`,
-                },
-                body: JSON.stringify({
-                    from: FROM,
-                    to: [giverEmail],
-                    subject: `Deine Wichtel-Zuweisung: ${action.name}`,
-                    html: `
-                        <h2>Die Auslosung hat stattgefunden!</h2>
-                        <p>Aktion: <strong>${action.name}</strong></p>
-                        <p>Du wichtelst für: <strong>${receiverName}</strong></p>
-                        ${wishlistHtml}
-                        <p>Übergabedatum: <strong>${action.handover_date}</strong></p>
-                        <p><a href="${SITE_URL}">Zur Aktion</a></p>
-                    `,
-                }),
-            })
+            try {
+                const res = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${RESEND_API_KEY}`,
+                    },
+                    body: JSON.stringify({
+                        from: FROM,
+                        to: [giverEmail],
+                        subject: `Deine Wichtel-Zuweisung: ${action.name}`,
+                        html: `
+                            <h2>Die Auslosung hat stattgefunden!</h2>
+                            <p>Aktion: <strong>${action.name}</strong></p>
+                            <p>Du wichtelst für: <strong>${receiverName}</strong></p>
+                            ${wishlistHtml}
+                            <p>Übergabedatum: <strong>${action.handover_date}</strong></p>
+                            <p><a href="${SITE_URL}">Zur Aktion</a></p>
+                        `,
+                    }),
+                })
+                if (!res.ok) {
+                    console.error(`E-Mail an ${giverEmail} fehlgeschlagen: ${res.status}`)
+                }
+            } catch (emailErr) {
+                console.error(`E-Mail an ${giverEmail} konnte nicht gesendet werden:`, emailErr)
+            }
         }
 
         return new Response(JSON.stringify({ ok: true }), {

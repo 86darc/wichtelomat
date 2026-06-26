@@ -31,7 +31,7 @@ function RegisterPage() {
         return (
             <div className="auth-container">
                 <h1>{t('auth.register')}</h1>
-                <p>Bitte bestätige deine E-Mail-Adresse über den Link den wir dir gesendet haben.</p>
+                <p>{t('auth.confirmEmail')}</p>
                 <Link to="/login">{t('auth.login')}</Link>
             </div>
         )
